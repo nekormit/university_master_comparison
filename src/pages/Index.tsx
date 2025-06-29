@@ -37,24 +37,26 @@ const Index = () => {
     
     if (searchTerm) {
       filtered = filtered.filter(program =>
-        program.programName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        program.universityName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        program.universityLocation.toLowerCase().includes(searchTerm.toLowerCase())
+        program.program_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        program.university_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (program.university_location && program.university_location.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
     
     return filtered;
   }, [programs, activeTab, searchTerm, getProgramsByField]);
 
-  const handleAddProgram = (data: ProgramFormData) => {
-    const newProgram = addProgram(data);
+  const handleAddProgram = async (data: ProgramFormData) => {
+    const newProgram = await addProgram(data);
     
-    // Switch to the tab of the newly added program's field
-    if (fields.includes(data.academicField)) {
-      setActiveTab(data.academicField);
-    } else {
-      // If it's a new field, the tab will be created and we can switch to it
-      setTimeout(() => setActiveTab(data.academicField), 100);
+    if (newProgram) {
+      // Switch to the tab of the newly added program's field
+      if (fields.includes(data.academic_field)) {
+        setActiveTab(data.academic_field);
+      } else {
+        // If it's a new field, the tab will be created and we can switch to it
+        setTimeout(() => setActiveTab(data.academic_field), 100);
+      }
     }
   };
 
@@ -65,7 +67,6 @@ const Index = () => {
       newSet.delete(id);
       return newSet;
     });
-    toast.success('Program deleted successfully');
   };
 
   const handleProgramSelect = (programId: string, selected: boolean) => {

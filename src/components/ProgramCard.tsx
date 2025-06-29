@@ -30,7 +30,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               onCheckedChange={(checked) => onSelect(program.id, checked as boolean)}
             />
             <Badge variant="secondary" className="text-xs">
-              {program.academicField}
+              {program.academic_field}
             </Badge>
           </div>
           <Button
@@ -44,59 +44,59 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
         </div>
         
         <CardTitle className="text-lg leading-tight">
-          {program.programName}
+          {program.program_name}
         </CardTitle>
         
         <div className="text-sm text-muted-foreground">
-          <div className="font-medium">{program.universityName}</div>
-          {program.universityLocation && (
-            <div>{program.universityLocation}</div>
+          <div className="font-medium">{program.university_name}</div>
+          {program.university_location && (
+            <div>{program.university_location}</div>
           )}
         </div>
       </CardHeader>
       
       <CardContent className="space-y-3">
         <div className="grid grid-cols-2 gap-2 text-sm">
-          {program.universityOverallRanking && (
+          {program.university_overall_ranking && (
             <div>
-              <span className="font-medium">Overall Rank:</span> #{program.universityOverallRanking}
+              <span className="font-medium">Overall Rank:</span> #{program.university_overall_ranking}
             </div>
           )}
-          {program.universitySubjectRanking && (
+          {program.university_subject_ranking && (
             <div>
-              <span className="font-medium">Subject Rank:</span> #{program.universitySubjectRanking}
+              <span className="font-medium">Subject Rank:</span> #{program.university_subject_ranking}
             </div>
           )}
-          {program.programDuration && (
+          {program.program_duration && (
             <div>
-              <span className="font-medium">Duration:</span> {program.programDuration}
+              <span className="font-medium">Duration:</span> {program.program_duration}
             </div>
           )}
-          {program.totalCredits > 0 && (
+          {program.total_credits > 0 && (
             <div>
-              <span className="font-medium">Credits:</span> {program.totalCredits}
+              <span className="font-medium">Credits:</span> {program.total_credits}
             </div>
           )}
         </div>
         
-        {program.annualTuitionFee > 0 && (
+        {program.annual_tuition_fee > 0 && (
           <div className="text-lg font-semibold text-blue-600">
-            ${program.annualTuitionFee.toLocaleString()}/year
+            ${program.annual_tuition_fee.toLocaleString()}/year
           </div>
         )}
         
-        {program.admissionRequirements && (
+        {program.admission_requirements && (
           <div className="text-sm">
             <span className="font-medium">Requirements:</span>
             <p className="text-muted-foreground mt-1 line-clamp-3">
-              {program.admissionRequirements}
+              {program.admission_requirements}
             </p>
           </div>
         )}
         
-        {program.programLink && (
+        {program.program_link && (
           <Button variant="outline" size="sm" className="w-full" asChild>
-            <a href={program.programLink} target="_blank" rel="noopener noreferrer">
+            <a href={program.program_link} target="_blank" rel="noopener noreferrer">
               <ExternalLinkIcon className="h-4 w-4 mr-2" />
               View Program
             </a>

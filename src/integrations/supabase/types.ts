@@ -9,7 +9,60 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      programs: {
+        Row: {
+          academic_field: string
+          admission_requirements: string | null
+          annual_tuition_fee: number | null
+          created_at: string
+          date_added: string
+          id: string
+          program_duration: string | null
+          program_link: string | null
+          program_name: string
+          total_credits: number | null
+          university_location: string | null
+          university_name: string
+          university_overall_ranking: number | null
+          university_subject_ranking: number | null
+          updated_at: string
+        }
+        Insert: {
+          academic_field: string
+          admission_requirements?: string | null
+          annual_tuition_fee?: number | null
+          created_at?: string
+          date_added?: string
+          id?: string
+          program_duration?: string | null
+          program_link?: string | null
+          program_name: string
+          total_credits?: number | null
+          university_location?: string | null
+          university_name: string
+          university_overall_ranking?: number | null
+          university_subject_ranking?: number | null
+          updated_at?: string
+        }
+        Update: {
+          academic_field?: string
+          admission_requirements?: string | null
+          annual_tuition_fee?: number | null
+          created_at?: string
+          date_added?: string
+          id?: string
+          program_duration?: string | null
+          program_link?: string | null
+          program_name?: string
+          total_credits?: number | null
+          university_location?: string | null
+          university_name?: string
+          university_overall_ranking?: number | null
+          university_subject_ranking?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

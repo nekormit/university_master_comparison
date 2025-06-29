@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ProgramFormData } from '@/types/Program';
-import { toast } from 'sonner';
 
 interface ProgramFormProps {
   isOpen: boolean;
@@ -16,44 +15,42 @@ interface ProgramFormProps {
 
 export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState<ProgramFormData>({
-    academicField: '',
-    universityName: '',
-    universityLocation: '',
-    universityOverallRanking: null,
-    universitySubjectRanking: null,
-    programName: '',
-    programLink: '',
-    programDuration: '',
-    admissionRequirements: '',
-    totalCredits: 0,
-    annualTuitionFee: 0,
+    academic_field: '',
+    university_name: '',
+    university_location: '',
+    university_overall_ranking: null,
+    university_subject_ranking: null,
+    program_name: '',
+    program_link: '',
+    program_duration: '',
+    admission_requirements: '',
+    total_credits: 0,
+    annual_tuition_fee: 0,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.academicField || !formData.universityName || !formData.programName) {
-      toast.error('Please fill in all required fields');
+    if (!formData.academic_field || !formData.university_name || !formData.program_name) {
       return;
     }
 
     onSubmit(formData);
-    toast.success('Program added successfully!');
     onClose();
     
     // Reset form
     setFormData({
-      academicField: '',
-      universityName: '',
-      universityLocation: '',
-      universityOverallRanking: null,
-      universitySubjectRanking: null,
-      programName: '',
-      programLink: '',
-      programDuration: '',
-      admissionRequirements: '',
-      totalCredits: 0,
-      annualTuitionFee: 0,
+      academic_field: '',
+      university_name: '',
+      university_location: '',
+      university_overall_ranking: null,
+      university_subject_ranking: null,
+      program_name: '',
+      program_link: '',
+      program_duration: '',
+      admission_requirements: '',
+      total_credits: 0,
+      annual_tuition_fee: 0,
     });
   };
 
@@ -71,120 +68,120 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="academicField">Academic Field *</Label>
+              <Label htmlFor="academic_field">Academic Field *</Label>
               <Input
-                id="academicField"
-                value={formData.academicField}
-                onChange={(e) => handleInputChange('academicField', e.target.value)}
+                id="academic_field"
+                value={formData.academic_field}
+                onChange={(e) => handleInputChange('academic_field', e.target.value)}
                 placeholder="e.g., Computer Science"
                 required
               />
             </div>
             
             <div>
-              <Label htmlFor="universityName">University Name *</Label>
+              <Label htmlFor="university_name">University Name *</Label>
               <Input
-                id="universityName"
-                value={formData.universityName}
-                onChange={(e) => handleInputChange('universityName', e.target.value)}
+                id="university_name"
+                value={formData.university_name}
+                onChange={(e) => handleInputChange('university_name', e.target.value)}
                 placeholder="e.g., Stanford University"
                 required
               />
             </div>
             
             <div>
-              <Label htmlFor="universityLocation">University Location</Label>
+              <Label htmlFor="university_location">University Location</Label>
               <Input
-                id="universityLocation"
-                value={formData.universityLocation}
-                onChange={(e) => handleInputChange('universityLocation', e.target.value)}
+                id="university_location"
+                value={formData.university_location}
+                onChange={(e) => handleInputChange('university_location', e.target.value)}
                 placeholder="e.g., Stanford, CA, USA"
               />
             </div>
             
             <div>
-              <Label htmlFor="programName">Program Name *</Label>
+              <Label htmlFor="program_name">Program Name *</Label>
               <Input
-                id="programName"
-                value={formData.programName}
-                onChange={(e) => handleInputChange('programName', e.target.value)}
+                id="program_name"
+                value={formData.program_name}
+                onChange={(e) => handleInputChange('program_name', e.target.value)}
                 placeholder="e.g., Master of Science in Computer Science"
                 required
               />
             </div>
             
             <div>
-              <Label htmlFor="universityOverallRanking">University Overall Ranking</Label>
+              <Label htmlFor="university_overall_ranking">University Overall Ranking</Label>
               <Input
-                id="universityOverallRanking"
+                id="university_overall_ranking"
                 type="number"
-                value={formData.universityOverallRanking || ''}
-                onChange={(e) => handleInputChange('universityOverallRanking', e.target.value ? parseInt(e.target.value) : null)}
+                value={formData.university_overall_ranking || ''}
+                onChange={(e) => handleInputChange('university_overall_ranking', e.target.value ? parseInt(e.target.value) : null)}
                 placeholder="e.g., 5"
               />
             </div>
             
             <div>
-              <Label htmlFor="universitySubjectRanking">University Subject Ranking</Label>
+              <Label htmlFor="university_subject_ranking">University Subject Ranking</Label>
               <Input
-                id="universitySubjectRanking"
+                id="university_subject_ranking"
                 type="number"
-                value={formData.universitySubjectRanking || ''}
-                onChange={(e) => handleInputChange('universitySubjectRanking', e.target.value ? parseInt(e.target.value) : null)}
+                value={formData.university_subject_ranking || ''}
+                onChange={(e) => handleInputChange('university_subject_ranking', e.target.value ? parseInt(e.target.value) : null)}
                 placeholder="e.g., 2"
               />
             </div>
             
             <div>
-              <Label htmlFor="programDuration">Program Duration</Label>
+              <Label htmlFor="program_duration">Program Duration</Label>
               <Input
-                id="programDuration"
-                value={formData.programDuration}
-                onChange={(e) => handleInputChange('programDuration', e.target.value)}
+                id="program_duration"
+                value={formData.program_duration}
+                onChange={(e) => handleInputChange('program_duration', e.target.value)}
                 placeholder="e.g., 2 years"
               />
             </div>
             
             <div>
-              <Label htmlFor="totalCredits">Total Credits</Label>
+              <Label htmlFor="total_credits">Total Credits</Label>
               <Input
-                id="totalCredits"
+                id="total_credits"
                 type="number"
-                value={formData.totalCredits}
-                onChange={(e) => handleInputChange('totalCredits', parseInt(e.target.value) || 0)}
+                value={formData.total_credits}
+                onChange={(e) => handleInputChange('total_credits', parseInt(e.target.value) || 0)}
                 placeholder="e.g., 45"
               />
             </div>
             
             <div>
-              <Label htmlFor="annualTuitionFee">Annual Tuition Fee (2025)</Label>
+              <Label htmlFor="annual_tuition_fee">Annual Tuition Fee (2025)</Label>
               <Input
-                id="annualTuitionFee"
+                id="annual_tuition_fee"
                 type="number"
-                value={formData.annualTuitionFee}
-                onChange={(e) => handleInputChange('annualTuitionFee', parseInt(e.target.value) || 0)}
+                value={formData.annual_tuition_fee}
+                onChange={(e) => handleInputChange('annual_tuition_fee', parseInt(e.target.value) || 0)}
                 placeholder="e.g., 55000"
               />
             </div>
             
             <div>
-              <Label htmlFor="programLink">Program Link</Label>
+              <Label htmlFor="program_link">Program Link</Label>
               <Input
-                id="programLink"
+                id="program_link"
                 type="url"
-                value={formData.programLink}
-                onChange={(e) => handleInputChange('programLink', e.target.value)}
+                value={formData.program_link}
+                onChange={(e) => handleInputChange('program_link', e.target.value)}
                 placeholder="https://..."
               />
             </div>
           </div>
           
           <div>
-            <Label htmlFor="admissionRequirements">Admission Requirements</Label>
+            <Label htmlFor="admission_requirements">Admission Requirements</Label>
             <Textarea
-              id="admissionRequirements"
-              value={formData.admissionRequirements}
-              onChange={(e) => handleInputChange('admissionRequirements', e.target.value)}
+              id="admission_requirements"
+              value={formData.admission_requirements}
+              onChange={(e) => handleInputChange('admission_requirements', e.target.value)}
               placeholder="Enter detailed admission requirements..."
               rows={4}
             />
