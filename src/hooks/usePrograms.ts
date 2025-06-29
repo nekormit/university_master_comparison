@@ -58,6 +58,31 @@ export const usePrograms = () => {
     }
   };
 
+  const editProgram = async (id: string, programData: ProgramFormData) => {
+    try {
+      const { data, error } = await supabase
+        .from('programs')
+        .update(programData)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error updating program:', error);
+        toast.error('Failed to update program');
+        return null;
+      }
+
+      setPrograms(prev => prev.map(p => p.id === id ? data : p));
+      toast.success('Program updated successfully!');
+      return data;
+    } catch (error) {
+      console.error('Error updating program:', error);
+      toast.error('Failed to update program');
+      return null;
+    }
+  };
+
   const deleteProgram = async (id: string) => {
     try {
       const { error } = await supabase
@@ -99,6 +124,7 @@ export const usePrograms = () => {
     programs,
     loading,
     addProgram,
+    editProgram,
     deleteProgram,
     getFieldCounts,
     getProgramsByField,

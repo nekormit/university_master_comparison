@@ -9,7 +9,7 @@ import { usePrograms } from '@/hooks/usePrograms';
 import { ProgramForm } from '@/components/ProgramForm';
 import { ProgramCard } from '@/components/ProgramCard';
 import { ComparisonModal } from '@/components/ComparisonModal';
-import { ProgramFormData } from '@/types/Program';
+import { Program, ProgramFormData } from '@/types/Program';
 import { toast } from 'sonner';
 
 const Index = () => {
@@ -17,6 +17,7 @@ const Index = () => {
     programs,
     loading,
     addProgram,
+    editProgram,
     deleteProgram,
     getFieldCounts,
     getProgramsByField,
@@ -25,6 +26,7 @@ const Index = () => {
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [editingProgram, setEditingProgram] = useState<Program | null>(null);
   const [selectedPrograms, setSelectedPrograms] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -60,6 +62,16 @@ const Index = () => {
     }
   };
 
+  const handleEditProgram = async (data: ProgramFormData) => {
+    if (!editingProgram) return;
+    
+    const updatedProgram = await editProgram(editingProgram.id, data);
+    
+    if (updatedProgram) {
+      setEditingProgram(null);
+    }
+  };
+
   const handleDeleteProgram = (id: string) => {
     deleteProgram(id);
     setSelectedPrograms(prev => {
@@ -79,6 +91,24 @@ const Index = () => {
       }
       return newSet;
     });
+  };
+
+  const handleEditClick = (program: Program) => {
+    setEditingProgram(program);
+    setIsFormOpen(true);
+  };
+
+  const handleFormClose = () => {
+    setIsFormOpen(false);
+    setEditingProgram(null);
+  };
+
+  const handleFormSubmit = (data: ProgramFormData) => {
+    if (editingProgram) {
+      handleEditProgram(data);
+    } else {
+      handleAddProgram(data);
+    }
   };
 
   const handleCompare = () => {
@@ -184,6 +214,7 @@ const Index = () => {
                     program={program}
                     isSelected={selectedPrograms.has(program.id)}
                     onSelect={handleProgramSelect}
+                    onEdit={handleEditClick}
                     onDelete={handleDeleteProgram}
                   />
                 ))}
@@ -214,6 +245,7 @@ const Index = () => {
                       program={program}
                       isSelected={selectedPrograms.has(program.id)}
                       onSelect={handleProgramSelect}
+                      onEdit={handleEditClick}
                       onDelete={handleDeleteProgram}
                     />
                   ))}
@@ -226,8 +258,9 @@ const Index = () => {
         {/* Modals */}
         <ProgramForm
           isOpen={isFormOpen}
-          onClose={() => setIsFormOpen(false)}
-          onSubmit={handleAddProgram}
+          onClose={handleFormClose}
+          onSubmit={handleFormSubmit}
+          editingProgram={editingProgram}
         />
         
         <ComparisonModal

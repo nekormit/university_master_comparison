@@ -6,18 +6,43 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Program } from '@/types/Program';
 import { ExternalLinkIcon, TrashIcon } from 'lucide-react';
+import { edit } from 'lucide-react';
 
 interface ProgramCardProps {
   program: Program;
   isSelected: boolean;
   onSelect: (programId: string, selected: boolean) => void;
+  onEdit: (program: Program) => void;
   onDelete: (programId: string) => void;
 }
+
+const formatAdmissionRequirements = (requirements: string | null) => {
+  if (!requirements) return null;
+  
+  // Split by common delimiters and filter out empty strings
+  const items = requirements
+    .split(/[•\n\r-]/)
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+  
+  if (items.length <= 1) {
+    return <p className="text-muted-foreground mt-1">{requirements}</p>;
+  }
+  
+  return (
+    <ul className="text-muted-foreground mt-1 list-disc list-inside space-y-1">
+      {items.map((item, index) => (
+        <li key={index} className="text-sm">{item}</li>
+      ))}
+    </ul>
+  );
+};
 
 export const ProgramCard: React.FC<ProgramCardProps> = ({
   program,
   isSelected,
   onSelect,
+  onEdit,
   onDelete,
 }) => {
   return (
@@ -33,14 +58,24 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               {program.academic_field}
             </Badge>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onDelete(program.id)}
-            className="text-red-500 hover:text-red-700 hover:bg-red-50"
-          >
-            <TrashIcon className="h-4 w-4" />
-          </Button>
+          <div className="flex gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onEdit(program)}
+              className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+            >
+              <edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onDelete(program.id)}
+              className="text-red-500 hover:text-red-700 hover:bg-red-50"
+            >
+              <TrashIcon className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         
         <CardTitle className="text-lg leading-tight">
@@ -88,9 +123,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
         {program.admission_requirements && (
           <div className="text-sm">
             <span className="font-medium">Requirements:</span>
-            <p className="text-muted-foreground mt-1 line-clamp-3">
-              {program.admission_requirements}
-            </p>
+            {formatAdmissionRequirements(program.admission_requirements)}
           </div>
         )}
         

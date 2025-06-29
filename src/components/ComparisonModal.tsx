@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,28 @@ interface ComparisonModalProps {
   onClose: () => void;
   programs: Program[];
 }
+
+const formatAdmissionRequirements = (requirements: string | null) => {
+  if (!requirements) return 'N/A';
+  
+  // Split by common delimiters and filter out empty strings
+  const items = requirements
+    .split(/[•\n\r-]/)
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+  
+  if (items.length <= 1) {
+    return requirements;
+  }
+  
+  return (
+    <ul className="list-disc list-inside space-y-1">
+      {items.map((item, index) => (
+        <li key={index} className="text-sm">{item}</li>
+      ))}
+    </ul>
+  );
+};
 
 export const ComparisonModal: React.FC<ComparisonModalProps> = ({
   isOpen,
@@ -117,7 +138,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
                     <div className="text-sm max-w-xs">
-                      {program.admission_requirements || 'N/A'}
+                      {formatAdmissionRequirements(program.admission_requirements)}
                     </div>
                   </td>
                 ))}

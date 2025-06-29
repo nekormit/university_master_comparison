@@ -1,19 +1,25 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { ProgramFormData } from '@/types/Program';
+import { Program, ProgramFormData } from '@/types/Program';
 
 interface ProgramFormProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: ProgramFormData) => void;
+  editingProgram?: Program | null;
 }
 
-export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSubmit }) => {
+export const ProgramForm: React.FC<ProgramFormProps> = ({ 
+  isOpen, 
+  onClose, 
+  onSubmit, 
+  editingProgram 
+}) => {
   const [formData, setFormData] = useState<ProgramFormData>({
     academic_field: '',
     university_name: '',
@@ -28,6 +34,40 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
     annual_tuition_fee: 0,
   });
 
+  // Populate form when editing
+  useEffect(() => {
+    if (editingProgram) {
+      setFormData({
+        academic_field: editingProgram.academic_field,
+        university_name: editingProgram.university_name,
+        university_location: editingProgram.university_location || '',
+        university_overall_ranking: editingProgram.university_overall_ranking,
+        university_subject_ranking: editingProgram.university_subject_ranking,
+        program_name: editingProgram.program_name,
+        program_link: editingProgram.program_link || '',
+        program_duration: editingProgram.program_duration || '',
+        admission_requirements: editingProgram.admission_requirements || '',
+        total_credits: editingProgram.total_credits || 0,
+        annual_tuition_fee: editingProgram.annual_tuition_fee || 0,
+      });
+    } else {
+      // Reset form for new program
+      setFormData({
+        academic_field: '',
+        university_name: '',
+        university_location: '',
+        university_overall_ranking: null,
+        university_subject_ranking: null,
+        program_name: '',
+        program_link: '',
+        program_duration: '',
+        admission_requirements: '',
+        total_credits: 0,
+        annual_tuition_fee: 0,
+      });
+    }
+  }, [editingProgram, isOpen]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -37,21 +77,6 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
 
     onSubmit(formData);
     onClose();
-    
-    // Reset form
-    setFormData({
-      academic_field: '',
-      university_name: '',
-      university_location: '',
-      university_overall_ranking: null,
-      university_subject_ranking: null,
-      program_name: '',
-      program_link: '',
-      program_duration: '',
-      admission_requirements: '',
-      total_credits: 0,
-      annual_tuition_fee: 0,
-    });
   };
 
   const handleInputChange = (field: keyof ProgramFormData, value: string | number | null) => {
@@ -62,7 +87,9 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add University Program</DialogTitle>
+          <DialogTitle>
+            {editingProgram ? 'Edit University Program' : 'Add University Program'}
+          </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -182,7 +209,7 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
               id="admission_requirements"
               value={formData.admission_requirements}
               onChange={(e) => handleInputChange('admission_requirements', e.target.value)}
-              placeholder="Enter detailed admission requirements..."
+              placeholder="Enter detailed admission requirements (use • or - for bullet points)..."
               rows={4}
             />
           </div>
@@ -192,7 +219,7 @@ export const ProgramForm: React.FC<ProgramFormProps> = ({ isOpen, onClose, onSub
               Cancel
             </Button>
             <Button type="submit">
-              Add Program
+              {editingProgram ? 'Update Program' : 'Add Program'}
             </Button>
           </div>
         </form>
