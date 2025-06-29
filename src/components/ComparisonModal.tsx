@@ -34,7 +34,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 {programs.map((program) => (
                   <th key={program.id} className="text-left p-2 min-w-[200px]">
                     <Badge variant="secondary" className="mb-2">
-                      {program.academicField}
+                      {program.academic_field}
                     </Badge>
                   </th>
                 ))}
@@ -45,9 +45,9 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Program Name</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    <div className="font-medium">{program.programName}</div>
+                    <div className="font-medium">{program.program_name}</div>
                     <div className="text-sm text-muted-foreground">
-                      {program.universityName}
+                      {program.university_name}
                     </div>
                   </td>
                 ))}
@@ -57,7 +57,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Location</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.universityLocation || 'N/A'}
+                    {program.university_location || 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -66,7 +66,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Overall Ranking</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.universityOverallRanking ? `#${program.universityOverallRanking}` : 'N/A'}
+                    {program.university_overall_ranking ? `#${program.university_overall_ranking}` : 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -75,7 +75,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Subject Ranking</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.universitySubjectRanking ? `#${program.universitySubjectRanking}` : 'N/A'}
+                    {program.university_subject_ranking ? `#${program.university_subject_ranking}` : 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -84,7 +84,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Duration</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.programDuration || 'N/A'}
+                    {program.program_duration || 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -93,7 +93,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Credits</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.totalCredits || 'N/A'}
+                    {program.total_credits || 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -103,8 +103,8 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
                     <div className="font-semibold text-blue-600">
-                      {program.annualTuitionFee > 0 
-                        ? `$${program.annualTuitionFee.toLocaleString()}` 
+                      {program.annual_tuition_fee > 0 
+                        ? `$${program.annual_tuition_fee.toLocaleString()}` 
                         : 'N/A'
                       }
                     </div>
@@ -117,7 +117,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
                     <div className="text-sm max-w-xs">
-                      {program.admissionRequirements || 'N/A'}
+                      {program.admission_requirements || 'N/A'}
                     </div>
                   </td>
                 ))}
@@ -127,9 +127,9 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <td className="p-2 font-medium">Program Link</td>
                 {programs.map((program) => (
                   <td key={program.id} className="p-2">
-                    {program.programLink ? (
+                    {program.program_link ? (
                       <Button variant="outline" size="sm" asChild>
-                        <a href={program.programLink} target="_blank" rel="noopener noreferrer">
+                        <a href={program.program_link} target="_blank" rel="noopener noreferrer">
                           <ExternalLinkIcon className="h-4 w-4 mr-2" />
                           View
                         </a>
