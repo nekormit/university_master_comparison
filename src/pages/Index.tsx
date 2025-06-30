@@ -119,6 +119,12 @@ const Index = () => {
     setIsComparisonOpen(true);
   };
 
+  const handleComparisonClose = () => {
+    setIsComparisonOpen(false);
+    // Automatically unselect all programs after comparison
+    setSelectedPrograms(new Set());
+  };
+
   const selectedProgramsData = programs.filter(p => selectedPrograms.has(p.id));
 
   if (loading) {
@@ -265,7 +271,7 @@ const Index = () => {
         
         <ComparisonModal
           isOpen={isComparisonOpen}
-          onClose={() => setIsComparisonOpen(false)}
+          onClose={handleComparisonClose}
           programs={selectedProgramsData}
         />
       </div>

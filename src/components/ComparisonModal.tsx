@@ -15,8 +15,10 @@ const formatAdmissionRequirements = (requirements: string | null) => {
   if (!requirements) return 'N/A';
   
   // Split by common delimiters and filter out empty strings
+  // Updated regex to only split on hyphens that are at the start of lines (bullet points)
+  // This prevents splitting compound words like "four-year"
   const items = requirements
-    .split(/[•\n\r-]/)
+    .split(/[•\n\r]|(?:^|\n)\s*-/)
     .map(item => item.trim())
     .filter(item => item.length > 0);
   
